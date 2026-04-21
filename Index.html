@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My AI Generator</title>
+</head>
+<body style="text-align:center;font-family:Arial">
+
+<h1>AI Image Generator</h1>
+
+<input id="prompt" placeholder="Wpisz prompt..." style="width:300px;padding:10px;">
+<button onclick="generate()">Generate</button>
+
+<p id="status"></p>
+<br>
+<img id="img" style="max-width:400px">
+
+<script>
+async function generate(){
+  document.getElementById("status").innerText = "Generating...";
+
+  const prompt = document.getElementById("prompt").value;
+
+  const res = await fetch("https://YOUR_BACKEND_URL/generate", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({prompt})
+  });
+
+  const data = await res.json();
+
+  document.getElementById("img").src = data.image;
+  document.getElementById("status").innerText = "Done!";
+}
+</script>
+
+</body>
+</html>
